@@ -6,5 +6,6 @@ namespace Ireckonu.Api.Converters
     public interface IDtoConverter
     {
         UploadConfiguration ToDomain(UploadRequest request);
+        UploadResponse ToDto(UploadResult model);
     }
 }

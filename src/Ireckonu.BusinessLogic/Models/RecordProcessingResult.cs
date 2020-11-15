@@ -8,5 +8,6 @@ namespace Ireckonu.BusinessLogic.Models
         public int Line { get; set; }
         public bool Success => !Issues.Any(e => e.Severity == Severity.Error);
         public List<Issue> Issues { get; } = new List<Issue>();
+        public CsvRecord Record { get; set; }
     }
 }

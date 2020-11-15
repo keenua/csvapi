@@ -32,6 +32,7 @@ namespace Ireckonu.Controllers
         [RequestSizeLimit(MaxFileSize)]
         [RequestFormLimits(MultipartBodyLengthLimit = MaxFileSize)]
         [ImplicitPayload]
+        [ProducesResponseType(typeof(UploadResponse), 200)]
         public async Task<IActionResult> Csv([FromQuery] UploadRequest request)
         {
             var stream = Request.BodyReader.AsStream();
@@ -39,7 +40,9 @@ namespace Ireckonu.Controllers
 
             var result = await _service.Upload(stream, configuration).ConfigureAwait(false);
 
-            return Ok(result);
+            var response = _converter.ToDto(result);
+
+            return Ok(response);
         }
     }
 }
