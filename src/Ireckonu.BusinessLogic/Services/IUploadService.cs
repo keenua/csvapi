@@ -6,6 +6,6 @@ namespace Ireckonu.BusinessLogic.Services
 {
     public interface IUploadService
     {
-        Task<UploadResult> Upload(Stream stream);
+        Task<UploadResult> Upload(Stream stream, UploadConfiguration configuration);
     }
 }

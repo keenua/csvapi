@@ -1,3 +1,5 @@
+using Ireckonu.Api.Converters;
+using Ireckonu.Api.Helpers;
 using Ireckonu.BusinessLogic;
 using Ireckonu.BusinessLogic.Services;
 using Microsoft.AspNetCore.Builder;
@@ -22,6 +24,11 @@ namespace Ireckonu
         {
             services.AddControllers();
             services.AddScoped<IUploadService, UploadService>();
+            services.AddSingleton<IDtoConverter, DtoConverter>();
+            services.AddSwaggerGen(o =>
+            {
+                o.OperationFilter<FileUploadHelper>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,6 +40,14 @@ namespace Ireckonu
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ireckonu API");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseRouting();
 
