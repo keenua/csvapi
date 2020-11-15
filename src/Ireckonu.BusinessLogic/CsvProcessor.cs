@@ -44,10 +44,8 @@ namespace Ireckonu.BusinessLogic
                 }
                 catch (MissingFieldException ex)
                 {
-                    var error = new ValueError
-                    {
-                        Text = ex.ReadingContext.HeaderRecord[ex.ReadingContext.CurrentIndex] + " is missing"
-                    };
+                    var msg = ex.ReadingContext.HeaderRecord[ex.ReadingContext.CurrentIndex] + " is missing";
+                    var error = new Error(msg);
                     result.Issues.Add(error);
                 }
 

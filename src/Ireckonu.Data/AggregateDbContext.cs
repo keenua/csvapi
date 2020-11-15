@@ -14,6 +14,7 @@ namespace Ireckonu.Data
         public AggregateDbContext(IEnumerable<IDbContext> contexts, ILogger<AggregateDbContext> logger)
         {
             _contexts = contexts?.ToArray();
+
             if (_contexts == null || _contexts.Length == 0)
             {
                 throw new ArgumentNullException(nameof(contexts), $"{nameof(contexts)} cannot be null or empty");

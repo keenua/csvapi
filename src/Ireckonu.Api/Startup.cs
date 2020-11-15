@@ -2,6 +2,7 @@ using Ireckonu.Api.Converters;
 using Ireckonu.Api.Helpers;
 using Ireckonu.BusinessLogic;
 using Ireckonu.BusinessLogic.Converters;
+using Ireckonu.BusinessLogic.Models;
 using Ireckonu.BusinessLogic.Services;
 using Ireckonu.Data;
 using Ireckonu.Data.Json;
@@ -40,6 +41,7 @@ namespace Ireckonu
 
             services.AddSingleton(Configuration.GetSection("JsonDb").Get<JsonDbSettings>());
             services.AddSingleton(Configuration.GetSection("MongoDb").Get<MongoSettings>());
+            services.AddSingleton(Configuration.GetSection("UploadService").Get<UploadServiceSettings>());
             services.AddTransient<JsonDbContext>();
             services.AddTransient<MongoDbContext>();
 

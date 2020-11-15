@@ -15,29 +15,30 @@ namespace Ireckonu.BusinessLogic.Services
 {
     public class UploadService : IUploadService
     {
-        private const int BufferSize = 1000;
-
         private readonly ICsvProcessor _csvProcessor;
         private readonly IDbContext _db;
         private readonly IModelConverter _converter;
+        private readonly UploadServiceSettings _settings;
         private readonly ILogger<UploadService> _logger;
 
         public UploadService(
             ICsvProcessor csvProcessor, 
             IDbContext db, 
             IModelConverter converter, 
+            UploadServiceSettings settings,
             ILogger<UploadService> logger
         )
         {
-            _csvProcessor = csvProcessor;
-            _db = db;
-            _converter = converter;
+            _csvProcessor = csvProcessor ?? throw new ArgumentException(nameof(csvProcessor));
+            _db = db ?? throw new ArgumentException(nameof(db));
+            _converter = converter ?? throw new ArgumentException(nameof(converter));
+            _settings = settings ?? throw new ArgumentException(nameof(settings));
             _logger = logger;
         }
 
         private async Task Store(List<RecordProcessingResult> buffer)
         {
-            var models = buffer.Select(pr => _converter.ToModel(pr.Record));
+            var models = buffer.Where(pr => pr.Success).Select(pr => _converter.ToModel(pr.Record));
             await _db.BulkUpsert(models).ConfigureAwait(false);
         }
 
@@ -71,18 +72,15 @@ namespace Ireckonu.BusinessLogic.Services
 
                 await foreach (var record in records)
                 {
-                    if (record.Success)
+                    buffer.Add(record);
+                    if (buffer.Count >= _settings.BufferSize)
                     {
-                        buffer.Add(record);
-                        if (buffer.Count >= BufferSize)
-                        {
-                            await Store(buffer).ConfigureAwait(false);
-                            MoveBufferToResult(result, buffer, uploadConfiguration);
+                        await Store(buffer).ConfigureAwait(false);
+                        MoveBufferToResult(result, buffer, uploadConfiguration);
 
-                            if (result.Records.Count >= uploadConfiguration.MaxRecordsInResponse)
-                            {
-                                break;
-                            }
+                        if (result.Records.Count >= uploadConfiguration.MaxRecordsInResponse)
+                        {
+                            break;
                         }
                     }
                 }
@@ -94,13 +92,13 @@ namespace Ireckonu.BusinessLogic.Services
             catch (BusinessException e)
             {
                 _logger.LogWarning(e, "Upload failed with a business exception");
-                result.Issue = new FileProcessingError { Text = e.Message };
+                result.Issue = new Error(e.Message);
             }
             // For handling other exceptions, i.e. storage failures. We don't want to propagate the exception message to user in this case
             catch (Exception e)
             {
                 _logger.LogError(e, "Upload failed with an unexpected exception");
-                result.Issue = new FileProcessingError { Text = "Upload failed with an unexpected exception" };
+                result.Issue = new Error("Upload failed with an unexpected exception");
             }
 
             _logger.LogInformation($"Returning {result.Records.Count} records. Last processed line: {result.LastProcessedLine}");
