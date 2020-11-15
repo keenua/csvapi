@@ -45,7 +45,10 @@ namespace Ireckonu.BusinessLogic
                 }
                 catch (MissingFieldException ex)
                 {
-                    var msg = ex.ReadingContext.HeaderRecord[ex.ReadingContext.CurrentIndex] + " is missing";
+                    var index = ex.ReadingContext.CurrentIndex;
+                    var header = ex.ReadingContext.HeaderRecord;
+
+                    var msg = header == null ? $"Field at column #{index} is missing" : $"{header[index]} is missing";
                     var error = new Error(msg);
                     result.Issues.Add(error);
                 }
