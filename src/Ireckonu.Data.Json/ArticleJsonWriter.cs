@@ -36,10 +36,6 @@ namespace Ireckonu.Data.Json
                 await WriteHeader().ConfigureAwait(false);
                 IsFirstRecord = false;
             }
-            else
-            { 
-                await _writer.WriteRawAsync(",").ConfigureAwait(false);
-            }
 
             _serializer.Serialize(_writer, article);
             IsFirstRecord = false;

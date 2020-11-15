@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
 using Ireckonu.BusinessLogic.Models;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -45,6 +46,13 @@ namespace Ireckonu.BusinessLogic
                 catch (MissingFieldException ex)
                 {
                     var msg = ex.ReadingContext.HeaderRecord[ex.ReadingContext.CurrentIndex] + " is missing";
+                    var error = new Error(msg);
+                    result.Issues.Add(error);
+                }
+                catch (TypeConverterException ex)
+                {
+                    var columnName = ex.MemberMapData.Member.Name;
+                    var msg = $"{columnName} has invalid format";
                     var error = new Error(msg);
                     result.Issues.Add(error);
                 }

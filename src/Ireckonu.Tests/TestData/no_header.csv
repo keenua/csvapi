@@ -1,4 +1,3 @@
-Key,ArtikelCode,ColorCode,Description,Price,DiscountPrice,DeliveredIn,Q1,Size,Color
 2800104,2,broek,Gaastra,8,0,1-3 werkdagen,baby,104,grijs
 00000002groe56,2,broek,Gaastra,8,0,1-3 werkdagen,baby,56,groen
 00000002groe62,2,broek,Gaastra,8,0,1-3 werkdagen,baby,62,groen
@@ -8,17 +7,15 @@ Key,ArtikelCode,ColorCode,Description,Price,DiscountPrice,DeliveredIn,Q1,Size,Co
 00000002groe86,2,broek,Gaastra,88,0,1-3 werkdagen,baby,86,groen
 00000002groe92,2,broek,Gaastra,8,0,1-3 werkdagen,baby,92,groen
 00000002groe98,2,broek,Gaastra,8,0,1-3 werkdagen,baby,98,groen
-  
 00000002groe104,2,broek,Gaastra,8,0,1-3 werkdagen,baby,104,groen
 00000002groe110,2,broek,Gaastra,8,0,1-3 werkdagen,baby,110,groen
-00000002groe116,2,broek,Gaastra,8,0,1-3 werkdagen,baby,116,groen,additional
-00000002groe122,2,broek,Gaastra,8,0,1-3 werkdagen,baby,a,groen
-00000002groe128
+00000002groe116,2,broek,Gaastra,8,0,1-3 werkdagen,baby,116,groen
+00000002groe122,2,broek,Gaastra,8,0,1-3 werkdagen,baby,122,groen
+00000002groe128,2,broek,Gaastra,8,0,1-3 werkdagen,baby,128,groen
 00000002wit/acup50,2,broek,Gaastra,8,0,1-3 werkdagen,baby,50,wit
 00000002wit/acup56,2,broek,Gaastra,8,0,1-3 werkdagen,baby,56,wit
 00000002wit/acup62,2,broek,Gaastra,8,0,1-3 werkdagen,baby,62,wit
-00000002wit
-
+00000002wit/acup68,2,broek,Gaastra,8,0,1-3 werkdagen,baby,68,wit
 00000002wit/acup74,2,broek,Gaastra,8,0,1-3 werkdagen,baby,74,wit
 00000002wit/acup80,2,broek,Gaastra,8,0,1-3 werkdagen,baby,80,wit
 00000002wit/acup86,2,broek,Gaastra,8,0,1-3 werkdagen,baby,86,wit

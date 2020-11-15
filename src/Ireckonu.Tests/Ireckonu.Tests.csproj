@@ -8,11 +8,15 @@
 
   <ItemGroup>
     <None Remove="TestData\broken_record.csv" />
+    <None Remove="TestData\no_header.csv" />
     <None Remove="TestData\small.csv" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="TestData\broken_record.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\no_header.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\small.csv">
