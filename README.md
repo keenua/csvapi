@@ -4,7 +4,7 @@ A .NET Core Web API project designed to handle CSV file uploads of a predefined 
 It processes the data, performs simple validation and then stores it in JSON file and `MongoDB`.
 A sample CSV file can be found [here][sample csv]
 
-## Prerequizites
+## Prerequisites
 
 - [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core)
 - [MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)
