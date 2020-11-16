@@ -16,7 +16,7 @@ The project assumes that your `MongoDB` instance is available at `mongodb://127.
 Just run these few commands:
 
 - `git clone https://github.com/keenua/csvapi`
-- `cd src/Ireckonu.Api`
+- `cd csvapi\src\Ireckonu.Api`
 - `dotnet run`
 
 Now you should be able to see the swagger UI if you go to [htts://localhost:5001].
@@ -55,4 +55,4 @@ Maximum file size, accepted by API is configured through code. You can find the 
 
 [sample csv]: ./src/Ireckonu.Tests/TestData/small.csv
 [app settings]: ./src/Ireckonu.Api/appsettings.json
-[max file size]: ./src/Ireckonu.Api/Controllers/UploadController.cs
+[max file size]: ./src/Ireckonu.Api/Controllers/UploadController.cs#17
