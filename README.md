@@ -19,7 +19,7 @@ Just run these few commands:
 - `cd csvapi\src\Ireckonu.Api`
 - `dotnet run`
 
-Now you should be able to see the swagger UI if you go to htts://localhost:5001.
+Now you should be able to see the swagger UI if you go to https://localhost:5001.
 You can try uploading a sample file through the `/upload` endpoint. 
 All parameters have reasonable defaults, so just attach the file itself.
 
