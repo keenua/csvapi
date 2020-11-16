@@ -2,13 +2,13 @@
 
 namespace Ireckonu.BusinessLogic.Exceptions
 {
-    abstract class BusinessException : Exception
+    public class BusinessException : Exception
     {
-        protected BusinessException() 
+        public BusinessException() 
         {
         }
 
-        protected BusinessException(string message): base(message) 
+        public BusinessException(string message): base(message) 
         { 
         }
     }

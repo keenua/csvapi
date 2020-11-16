@@ -1,4 +1,6 @@
-﻿namespace Ireckonu.Data.Mongo
+﻿using Ireckonu.Data.Models;
+
+namespace Ireckonu.Data.Mongo
 {
     internal class ArticleDocument : Article
     {

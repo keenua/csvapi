@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ireckonu.Data
+﻿namespace Ireckonu.Data.Models
 {
     public class Article
     {

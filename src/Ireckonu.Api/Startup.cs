@@ -35,6 +35,7 @@ namespace Ireckonu
             });
 
             services.AddScoped<IUploadService, UploadService>();
+            services.AddScoped<IValidationService, ValidationService>();
             services.AddSingleton<IDtoConverter, DtoConverter>();
             services.AddScoped<ICsvProcessor, CsvProcessor>();
             services.AddSingleton<IModelConverter, ModelConverter>();
@@ -58,7 +59,7 @@ namespace Ireckonu
 
             services.AddSwaggerGen(o =>
             {
-                o.OperationFilter<FileUploadHelper>();
+                o.OperationFilter<OpenApiFileUploadFilter>();
             });
         }
 

@@ -1,45 +1,26 @@
-﻿using System;
+﻿using Ireckonu.Tests.Helpers;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace Ireckonu.Tests
 {
+    /// <summary>
+    /// A class used to generate large test files for manual / integration testing
+    /// </summary>
     internal sealed class TestFileGenerator
     {
-        const string Alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMONPQRSTUVWXYZ0123456789/";
-
-        static Random Random { get; } = new Random(Environment.TickCount);
-
-        private static string RandomString(int length)
-        {
-            var s = new char[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                s[i] = Alphabet[Random.Next(0, Alphabet.Length)];
-            }
-
-            return new string(s);
-        }
-
-        private static string RandomString(int minLenght, int maxLenght)
-        {
-            var length = Random.Next(minLenght, maxLenght);
-            return RandomString(length);
-        }
-
         private string GenerateValidRecord()
         {
-            var key = RandomString(8, 20);
-            var articleCode = RandomString(1, 10);
-            var colorCode = RandomString(5, 15);
-            var description = RandomString(5, 15);
-            var price = Random.Next(0, 10000);
-            var discount = Random.Next(0, 10000);
-            var deliveredIn = RandomString(5, 15);
-            var q1 = RandomString(3, 10);
-            var size = Random.Next(0, 200);
-            var color = RandomString(3, 10);
+            var key = RandomHelper.RandomString(8, 20);
+            var articleCode = RandomHelper.RandomString(1, 10);
+            var colorCode = RandomHelper.RandomString(5, 15);
+            var description = RandomHelper.RandomString(5, 15);
+            var price = RandomHelper.Random.Next(0, 10000);
+            var discount = RandomHelper.Random.Next(0, 10000);
+            var deliveredIn = RandomHelper.RandomString(5, 15);
+            var q1 = RandomHelper.RandomString(3, 10);
+            var size = RandomHelper.Random.Next(0, 200);
+            var color = RandomHelper.RandomString(3, 10);
 
             var values = new string[]
             {
@@ -60,7 +41,7 @@ namespace Ireckonu.Tests
 
         private string GenerateInvalidRecord()
         {
-            return RandomString(1, 100);
+            return RandomHelper.RandomString(1, 100);
         }
 
         public async Task Generate(string path, int numberOfRecords)
@@ -72,7 +53,7 @@ namespace Ireckonu.Tests
 
             for (int i = 0; i < numberOfRecords; i++)
             {
-                var record = Random.NextDouble() > 0.01 ? GenerateValidRecord() : GenerateInvalidRecord();
+                var record = RandomHelper.Random.NextDouble() > 0.001 ? GenerateValidRecord() : GenerateInvalidRecord();
                 await writer.WriteLineAsync(record);
             }
             writer.Flush();

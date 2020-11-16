@@ -1,11 +1,12 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
-using Ireckonu.BusinessLogic.Models;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using Ireckonu.BusinessLogic.Models;
+using Ireckonu.BusinessLogic.Models.Issues;
 
 namespace Ireckonu.BusinessLogic
 {
@@ -41,6 +42,7 @@ namespace Ireckonu.BusinessLogic
                 try
                 {
                     var record = csv.GetRecord<CsvRecord>();
+                    if (record == null) continue;
                     result.Record = record;
                 }
                 catch (MissingFieldException ex)
@@ -62,7 +64,7 @@ namespace Ireckonu.BusinessLogic
 
                 if (line % 10000 == 0)
                 {
-                    _logger.LogDebug($"{line} records processed");
+                    _logger.LogInformation($"{line} records processed");
                 }
 
                 yield return result;

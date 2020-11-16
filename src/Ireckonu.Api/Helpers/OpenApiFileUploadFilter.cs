@@ -4,7 +4,10 @@ using System.Linq;
 
 namespace Ireckonu.Api.Helpers
 {
-    public class FileUploadHelper : IOperationFilter
+    /// <summary>
+    /// Adds a file picker in swagger for all the endpoints marked with [ImplicitPayload] attribute
+    /// </summary>
+    public class OpenApiFileUploadFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {

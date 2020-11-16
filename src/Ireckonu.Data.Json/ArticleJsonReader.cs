@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Ireckonu.Data.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,9 +50,23 @@ namespace Ireckonu.Data.Json
 
         public void Dispose()
         {
-            _reader?.Close();
-            _streamReader?.Dispose();
-            _stream?.Dispose();
+            try
+            {
+                _reader?.Close();
+            }
+            catch { }
+
+            try
+            {
+                _streamReader?.Dispose();
+            }
+            catch { }
+
+            try
+            {
+                _stream?.Dispose();
+            }
+            catch { }
         }
     }
 }

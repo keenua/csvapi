@@ -1,5 +1,6 @@
 ﻿using Ireckonu.Api.Models;
 using Ireckonu.BusinessLogic.Models;
+using Ireckonu.BusinessLogic.Models.Issues;
 using System.Linq;
 
 namespace Ireckonu.Api.Converters

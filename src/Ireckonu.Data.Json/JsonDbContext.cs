@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ireckonu.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Ireckonu.Data.Json
     {
         private readonly JsonDbSettings _settings;
         
-        static SemaphoreSlim dbSemaphore = new SemaphoreSlim(1, 1);
+        static readonly SemaphoreSlim dbSemaphore = new SemaphoreSlim(1, 1);
 
         public JsonDbContext(JsonDbSettings settings)
         {

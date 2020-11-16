@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ireckonu.Data.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -66,7 +67,12 @@ namespace Ireckonu.Data.Mongo
                     IsUpsert = true 
                 };
                 return upsert;
-            });
+            }).ToList();
+
+            if (bulk.Count == 0)
+            {
+                return;
+            }
 
             var options = new BulkWriteOptions
             {

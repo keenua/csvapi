@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Ireckonu.BusinessLogic.Models.Issues;
+using System.Collections.Generic;
 
 namespace Ireckonu.BusinessLogic.Models
 {

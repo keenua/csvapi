@@ -1,6 +1,7 @@
-﻿using Ireckonu.BusinessLogic.Models;
-using Ireckonu.BusinessLogic.Exceptions;
+﻿using Ireckonu.BusinessLogic.Exceptions;
 using Ireckonu.BusinessLogic.Converters;
+using Ireckonu.BusinessLogic.Models;
+using Ireckonu.BusinessLogic.Models.Issues;
 using Ireckonu.Data;
 
 using System;
@@ -11,11 +12,13 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
 
+
 namespace Ireckonu.BusinessLogic.Services
 {
     public class UploadService : IUploadService
     {
         private readonly ICsvProcessor _csvProcessor;
+        private readonly IValidationService _validationService;
         private readonly IDbContext _db;
         private readonly IModelConverter _converter;
         private readonly UploadServiceSettings _settings;
@@ -23,6 +26,7 @@ namespace Ireckonu.BusinessLogic.Services
 
         public UploadService(
             ICsvProcessor csvProcessor, 
+            IValidationService validationService,
             IDbContext db, 
             IModelConverter converter, 
             UploadServiceSettings settings,
@@ -30,6 +34,7 @@ namespace Ireckonu.BusinessLogic.Services
         )
         {
             _csvProcessor = csvProcessor ?? throw new ArgumentException(nameof(csvProcessor));
+            _validationService = validationService ?? throw new ArgumentNullException(nameof(validationService));
             _db = db ?? throw new ArgumentException(nameof(db));
             _converter = converter ?? throw new ArgumentException(nameof(converter));
             _settings = settings ?? throw new ArgumentException(nameof(settings));
@@ -61,17 +66,30 @@ namespace Ireckonu.BusinessLogic.Services
             buffer.Clear();
         }
 
+        private async Task ValidateRecord(RecordProcessingResult record)
+        {
+            if (record.Success)
+            {
+                var issues = await _validationService.Validate(record.Record).ConfigureAwait(false);
+                record.Issues.AddRange(issues);
+            }
+        }
+
         public async Task<UploadResult> Upload(Stream stream, UploadConfiguration uploadConfiguration)
         {
             var result = new UploadResult();
             var buffer = new List<RecordProcessingResult>();
 
+            DateTime start = DateTime.Now;
+
             try
             {
-                var records = _csvProcessor.Process(stream, uploadConfiguration.ContainsHeader);
+                var records = _csvProcessor.Process(stream, uploadConfiguration.ContainsHeader).ConfigureAwait(false);
 
                 await foreach (var record in records)
                 {
+                    //await ValidateRecord(record).ConfigureAwait(false);
+
                     buffer.Add(record);
                     if (buffer.Count >= _settings.BufferSize)
                     {
@@ -88,7 +106,8 @@ namespace Ireckonu.BusinessLogic.Services
                 await Store(buffer).ConfigureAwait(false);
                 MoveBufferToResult(result, buffer, uploadConfiguration);
             }
-            // For handling file validation exceptions etc., which we want to report to end user
+            // For handling file validation exceptions etc., which we want to report to end user.
+            // There are currently no business expections thrown, so this is just for show
             catch (BusinessException e)
             {
                 _logger.LogWarning(e, "Upload failed with a business exception");
@@ -101,7 +120,8 @@ namespace Ireckonu.BusinessLogic.Services
                 result.Issue = new Error("Upload failed with an unexpected exception");
             }
 
-            _logger.LogInformation($"Returning {result.Records.Count} records. Last processed line: {result.LastProcessedLine}");
+
+            _logger.LogInformation($"Returning {result.Records.Count} records. Last processed line: {result.LastProcessedLine}. Time ellapsed: {(DateTime.Now - start).TotalSeconds} seconds");
             return result;
         }
     }

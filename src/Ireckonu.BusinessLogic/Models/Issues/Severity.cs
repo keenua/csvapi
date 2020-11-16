@@ -1,4 +1,4 @@
-﻿namespace Ireckonu.BusinessLogic.Models
+﻿namespace Ireckonu.BusinessLogic.Models.Issues
 {
     public enum Severity
     {

@@ -1,5 +1,5 @@
 ﻿using Ireckonu.BusinessLogic.Models;
-using Ireckonu.Data;
+using Ireckonu.Data.Models;
 
 namespace Ireckonu.BusinessLogic.Converters
 {
