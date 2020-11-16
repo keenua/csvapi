@@ -88,7 +88,7 @@ namespace Ireckonu.BusinessLogic.Services
 
                 await foreach (var record in records)
                 {
-                    //await ValidateRecord(record).ConfigureAwait(false);
+                    await ValidateRecord(record).ConfigureAwait(false);
 
                     buffer.Add(record);
                     if (buffer.Count >= _settings.BufferSize)

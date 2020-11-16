@@ -116,7 +116,6 @@ namespace Ireckonu.Data.Json
             {
                 File.Delete(_settings.BackupFilePath);
             }
-            File.Delete(_settings.SecondaryFilePath);
         }
 
         public void Dispose()
