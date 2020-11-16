@@ -1,4 +1,4 @@
-# .NET Core web API for CSV processing
+# .NET Core Web API for CSV processing
 
 A .NET Core Web API project designed to handle CSV file uploads of a predefined format. 
 It processes the data, performs simple validation and then stores it in JSON file and `MongoDB`.
