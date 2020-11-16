@@ -111,6 +111,7 @@ For now, the performance can be tweaked by changing the size of the buffer in se
 ## Leftovers
 
 - I haven't split the `Article` model into multiple models, since there was no real reason to. If the use cases dictate that, it could easily be changed. This does mean that we can potentially get a sigificant amount of duplicate values (i.e. colors, article codes) in the db. However, I would choose simplicity over optimization until a clear use case is known here.
+- I made a couple of assumptions regarding the data, including all the values being either strings or ints. This is a concious decision and can be tweaked with more info about the use cases
 - Given the limited time, not all cases are covered by tests (or even the solution itself). I fully skipped MongoDbContext, converters and other tests.
 - Some parts of the solution are overengineered either by design (to show the approach I would take in a larger project) or by the pure fact that I spent more time on one thing than the other.
 - I don't have Resharper installed on this machine, so sorry for any obvious formatting/redundancy mistakes in the project
